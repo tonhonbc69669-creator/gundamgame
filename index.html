@@ -1247,7 +1247,7 @@
       <form onsubmit="handleLoginSubmit(event)">
         <div class="modal-body">
           <p style="font-size: 0.85rem; color: var(--text-muted); margin-bottom: 1.2rem;">
-            สำหรับเจ้าของเว็บไซต์ เพื่อเข้าสู่ระบบเพิ่ม/ลบ/แก้ไขเกมส์ (รหัสผ่านเริ่มต้น: <code style="color: #60a5fa; background: #131d36; padding: 2px 6px; border-radius: 4px;">admin123</code>)
+            สำหรับผู้ดูแลเว็บไซต์ (Admin) เท่านั้น กรุณากรอกรหัสผ่านเพื่อเข้าสู่ระบบจัดการเกมส์
           </p>
           <div class="form-group">
             <label class="form-label">รหัสผ่านแอดมิน (Admin Password)</label>
@@ -1564,9 +1564,9 @@
        INITIALIZATION
        ========================================================== */
     function init() {
-      // 1. Load Admin Password if not set
-      if (!localStorage.getItem(ADMIN_PASS_KEY)) {
-        localStorage.setItem(ADMIN_PASS_KEY, "admin123");
+      // 1. Load Admin Password (Default: 696690)
+      if (!localStorage.getItem(ADMIN_PASS_KEY) || localStorage.getItem(ADMIN_PASS_KEY) === "admin123") {
+        localStorage.setItem(ADMIN_PASS_KEY, "696690");
       }
 
       // 2. Load Games Data
@@ -2019,7 +2019,7 @@
     function handleLoginSubmit(e) {
       e.preventDefault();
       const inputPass = document.getElementById("adminPasswordInput").value.trim();
-      const realPass = localStorage.getItem(ADMIN_PASS_KEY) || "admin123";
+      const realPass = localStorage.getItem(ADMIN_PASS_KEY) || "696690";
 
       if (inputPass === realPass) {
         isAdmin = true;
@@ -2053,7 +2053,7 @@
       e.preventDefault();
       const oldPass = document.getElementById("oldAdminPass").value.trim();
       const newPass = document.getElementById("newAdminPass").value.trim();
-      const currentPass = localStorage.getItem(ADMIN_PASS_KEY) || "admin123";
+      const currentPass = localStorage.getItem(ADMIN_PASS_KEY) || "696690";
 
       if (oldPass !== currentPass) {
         showToast("รหัสผ่านปัจจุบันไม่ถูกต้อง", "error");
