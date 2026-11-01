@@ -1,0 +1,2356 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>GUNDAMGAME - คลังเกมส์ออนไลน์สไตล์ GOG</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Prompt:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&family=Rajdhani:wght@600;700&display=swap" rel="stylesheet">
+
+  <style>
+    :root {
+      --bg-dark: #070a12;
+      --bg-card: #0f1626;
+      --bg-card-hover: #152037;
+      --bg-surface: #131b2e;
+      --border-color: #1e2c4a;
+      --border-highlight: #2563eb;
+      
+      --blue-primary: #0066ff;
+      --blue-hover: #1d72fe;
+      --blue-glow: rgba(0, 102, 255, 0.45);
+      --cyan-accent: #00e5ff;
+      
+      --text-main: #ffffff;
+      --text-muted: #94a3b8;
+      --text-dim: #64748b;
+      
+      --danger: #ef4444;
+      --success: #10b981;
+      --warning: #f59e0b;
+
+      --radius-sm: 6px;
+      --radius-md: 10px;
+      --radius-lg: 16px;
+      --transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    body {
+      background-color: var(--bg-dark);
+      color: var(--text-main);
+      font-family: 'Prompt', -apple-system, BlinkMacSystemFont, sans-serif;
+      min-height: 100vh;
+      overflow-x: hidden;
+      line-height: 1.5;
+      background-image: 
+        radial-gradient(circle at 15% 15%, rgba(0, 102, 255, 0.08) 0%, transparent 40%),
+        radial-gradient(circle at 85% 65%, rgba(0, 229, 255, 0.05) 0%, transparent 40%);
+    }
+
+    /* Scrollbar */
+    ::-webkit-scrollbar {
+      width: 8px;
+      height: 8px;
+    }
+    ::-webkit-scrollbar-track {
+      background: #090d16;
+    }
+    ::-webkit-scrollbar-thumb {
+      background: #1e2d4d;
+      border-radius: 4px;
+    }
+    ::-webkit-scrollbar-thumb:hover {
+      background: var(--blue-primary);
+    }
+
+    /* Navbar */
+    .navbar {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      background: rgba(7, 10, 18, 0.88);
+      backdrop-filter: blur(16px);
+      border-bottom: 1px solid var(--border-color);
+      padding: 0.8rem 2rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 1.5rem;
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 0.8rem;
+      text-decoration: none;
+      color: #fff;
+      cursor: pointer;
+    }
+
+    .brand-logo-box {
+      width: 42px;
+      height: 42px;
+      background: linear-gradient(135deg, var(--blue-primary), #00d2ff);
+      border-radius: var(--radius-md);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 0 15px var(--blue-glow);
+    }
+
+    .brand-logo-box svg {
+      width: 24px;
+      height: 24px;
+      color: #fff;
+    }
+
+    .brand-text {
+      font-family: 'Rajdhani', sans-serif;
+      font-size: 1.5rem;
+      font-weight: 700;
+      letter-spacing: 1px;
+      background: linear-gradient(to right, #ffffff, #93c5fd);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      display: flex;
+      flex-direction: column;
+      line-height: 1.1;
+    }
+
+    .brand-sub {
+      font-size: 0.65rem;
+      letter-spacing: 2px;
+      color: var(--cyan-accent);
+      text-transform: uppercase;
+      font-family: 'Prompt', sans-serif;
+      -webkit-text-fill-color: initial;
+    }
+
+    .search-wrapper {
+      flex: 1;
+      max-width: 480px;
+      position: relative;
+    }
+
+    .search-input {
+      width: 100%;
+      background: var(--bg-surface);
+      border: 1px solid var(--border-color);
+      border-radius: 9999px;
+      padding: 0.65rem 1.2rem 0.65rem 2.8rem;
+      color: #fff;
+      font-size: 0.9rem;
+      outline: none;
+      transition: var(--transition);
+      font-family: inherit;
+    }
+
+    .search-input:focus {
+      border-color: var(--blue-primary);
+      box-shadow: 0 0 12px var(--blue-glow);
+      background: #18233c;
+    }
+
+    .search-icon {
+      position: absolute;
+      left: 1rem;
+      top: 50%;
+      transform: translateY(-50%);
+      width: 18px;
+      height: 18px;
+      color: var(--text-muted);
+      pointer-events: none;
+    }
+
+    .nav-actions {
+      display: flex;
+      align-items: center;
+      gap: 0.8rem;
+    }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.5rem;
+      padding: 0.6rem 1.2rem;
+      font-size: 0.88rem;
+      font-weight: 500;
+      border-radius: var(--radius-md);
+      cursor: pointer;
+      transition: var(--transition);
+      border: 1px solid transparent;
+      text-decoration: none;
+      font-family: inherit;
+    }
+
+    .btn-primary {
+      background: linear-gradient(135deg, var(--blue-primary), #0052cc);
+      color: #fff;
+      box-shadow: 0 4px 14px var(--blue-glow);
+    }
+
+    .btn-primary:hover {
+      background: linear-gradient(135deg, var(--blue-hover), #005ce6);
+      transform: translateY(-2px);
+      box-shadow: 0 6px 20px rgba(0, 102, 255, 0.6);
+    }
+
+    .btn-outline {
+      background: transparent;
+      color: #fff;
+      border: 1px solid var(--border-color);
+    }
+
+    .btn-outline:hover {
+      background: var(--bg-surface);
+      border-color: var(--blue-primary);
+      color: #93c5fd;
+    }
+
+    .btn-admin-active {
+      background: rgba(16, 185, 129, 0.15);
+      border-color: #10b981;
+      color: #34d399;
+    }
+
+    .btn-danger {
+      background: rgba(239, 68, 68, 0.15);
+      border-color: rgba(239, 68, 68, 0.4);
+      color: #f87171;
+    }
+
+    .btn-danger:hover {
+      background: #ef4444;
+      color: #fff;
+    }
+
+    /* Container */
+    .container {
+      max-width: 1360px;
+      margin: 0 auto;
+      padding: 1.5rem 2rem 4rem;
+    }
+
+    /* Hero Carousel (GOG Style Showcase) */
+    .hero-section {
+      margin-bottom: 2.5rem;
+      position: relative;
+      border-radius: var(--radius-lg);
+      overflow: hidden;
+      background: var(--bg-card);
+      border: 1px solid var(--border-color);
+      box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+    }
+
+    .hero-slider {
+      position: relative;
+      min-height: 440px;
+      display: flex;
+      align-items: flex-end;
+    }
+
+    .hero-slide {
+      position: absolute;
+      inset: 0;
+      opacity: 0;
+      visibility: hidden;
+      transition: opacity 0.6s ease, visibility 0.6s ease;
+      display: flex;
+      align-items: flex-end;
+    }
+
+    .hero-slide.active {
+      opacity: 1;
+      visibility: visible;
+    }
+
+    .hero-bg {
+      position: absolute;
+      inset: 0;
+      background-size: cover;
+      background-position: center;
+      transform: scale(1.02);
+      transition: transform 6s ease;
+    }
+
+    .hero-slide.active .hero-bg {
+      transform: scale(1.06);
+    }
+
+    .hero-overlay {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(
+        to top,
+        #070a12 0%,
+        rgba(7, 10, 18, 0.85) 45%,
+        rgba(7, 10, 18, 0.3) 100%
+      ),
+      linear-gradient(
+        to right,
+        rgba(7, 10, 18, 0.95) 0%,
+        rgba(7, 10, 18, 0.6) 60%,
+        transparent 100%
+      );
+    }
+
+    .hero-content {
+      position: relative;
+      z-index: 2;
+      padding: 3rem;
+      max-width: 680px;
+    }
+
+    .hero-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+      padding: 0.3rem 0.8rem;
+      background: rgba(0, 102, 255, 0.25);
+      border: 1px solid var(--blue-primary);
+      color: #60a5fa;
+      border-radius: 9999px;
+      font-size: 0.78rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      margin-bottom: 0.8rem;
+    }
+
+    .hero-title {
+      font-size: 2.5rem;
+      font-weight: 700;
+      line-height: 1.15;
+      margin-bottom: 0.8rem;
+      color: #fff;
+      text-shadow: 0 2px 10px rgba(0,0,0,0.7);
+    }
+
+    .hero-desc {
+      color: #cbd5e1;
+      font-size: 0.98rem;
+      margin-bottom: 1.5rem;
+      display: -webkit-box;
+      -webkit-line-clamp: 2;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
+      line-height: 1.6;
+    }
+
+    .hero-buttons {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      flex-wrap: wrap;
+    }
+
+    .hero-game-icon {
+      width: 58px;
+      height: 58px;
+      border-radius: var(--radius-md);
+      border: 2px solid var(--border-highlight);
+      box-shadow: 0 0 15px rgba(0, 102, 255, 0.5);
+      object-fit: cover;
+      background: #000;
+    }
+
+    .hero-controls {
+      position: absolute;
+      right: 2rem;
+      bottom: 2rem;
+      z-index: 3;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .hero-nav-btn {
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      background: rgba(19, 27, 46, 0.85);
+      border: 1px solid var(--border-color);
+      color: #fff;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      transition: var(--transition);
+      backdrop-filter: blur(8px);
+    }
+
+    .hero-nav-btn:hover {
+      background: var(--blue-primary);
+      border-color: var(--blue-primary);
+      box-shadow: 0 0 12px var(--blue-glow);
+    }
+
+    .hero-indicators {
+      display: flex;
+      gap: 6px;
+      margin-right: 0.8rem;
+    }
+
+    .hero-dot {
+      width: 24px;
+      height: 4px;
+      border-radius: 2px;
+      background: rgba(255,255,255,0.25);
+      cursor: pointer;
+      transition: var(--transition);
+    }
+
+    .hero-dot.active {
+      background: var(--blue-primary);
+      box-shadow: 0 0 8px var(--blue-glow);
+      width: 38px;
+    }
+
+    /* Section Headers */
+    .section-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 1.2rem;
+      flex-wrap: wrap;
+      gap: 1rem;
+    }
+
+    .section-title-wrap {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+    }
+
+    .section-title {
+      font-size: 1.4rem;
+      font-weight: 700;
+      letter-spacing: 0.5px;
+      color: #fff;
+    }
+
+    .section-badge {
+      background: #18243e;
+      color: #93c5fd;
+      border: 1px solid var(--border-color);
+      font-size: 0.75rem;
+      padding: 0.2rem 0.6rem;
+      border-radius: 9999px;
+      font-weight: 600;
+    }
+
+    /* Filters Bar */
+    .filter-bar {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      flex-wrap: wrap;
+      margin-bottom: 1.8rem;
+      padding-bottom: 1rem;
+      border-bottom: 1px solid rgba(255,255,255,0.06);
+    }
+
+    .filter-chip {
+      background: var(--bg-surface);
+      border: 1px solid var(--border-color);
+      color: var(--text-muted);
+      padding: 0.45rem 1rem;
+      border-radius: 9999px;
+      font-size: 0.83rem;
+      font-weight: 500;
+      cursor: pointer;
+      transition: var(--transition);
+      user-select: none;
+    }
+
+    .filter-chip:hover {
+      color: #fff;
+      border-color: var(--blue-primary);
+      background: #19233c;
+    }
+
+    .filter-chip.active {
+      background: var(--blue-primary);
+      color: #fff;
+      border-color: var(--blue-primary);
+      box-shadow: 0 2px 10px var(--blue-glow);
+    }
+
+    /* Game Grid */
+    .game-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(290px, 1fr));
+      gap: 1.5rem;
+    }
+
+    /* Game Card (GOG / Steam Style) */
+    .game-card {
+      background: var(--bg-card);
+      border-radius: var(--radius-md);
+      border: 1px solid var(--border-color);
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      transition: var(--transition);
+      position: relative;
+    }
+
+    .game-card:hover {
+      transform: translateY(-5px);
+      border-color: var(--border-highlight);
+      box-shadow: 0 12px 28px rgba(0, 102, 255, 0.18);
+      background: var(--bg-card-hover);
+    }
+
+    .card-banner-wrap {
+      position: relative;
+      aspect-ratio: 16 / 9;
+      overflow: hidden;
+      background: #000;
+      cursor: pointer;
+    }
+
+    .card-banner {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: transform 0.4s ease;
+    }
+
+    .game-card:hover .card-banner {
+      transform: scale(1.06);
+    }
+
+    .card-banner-gradient {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(to top, rgba(15, 22, 38, 0.95) 0%, transparent 60%);
+      pointer-events: none;
+    }
+
+    .card-genre-badge {
+      position: absolute;
+      top: 0.75rem;
+      left: 0.75rem;
+      background: rgba(7, 10, 18, 0.8);
+      backdrop-filter: blur(8px);
+      border: 1px solid rgba(255,255,255,0.15);
+      color: #38bdf8;
+      font-size: 0.72rem;
+      font-weight: 600;
+      padding: 0.2rem 0.55rem;
+      border-radius: 4px;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+
+    .card-featured-badge {
+      position: absolute;
+      top: 0.75rem;
+      right: 0.75rem;
+      background: rgba(245, 158, 11, 0.9);
+      color: #000;
+      font-size: 0.7rem;
+      font-weight: 700;
+      padding: 0.15rem 0.5rem;
+      border-radius: 4px;
+      display: flex;
+      align-items: center;
+      gap: 3px;
+    }
+
+    /* Icon Overlay at the bottom edge of banner */
+    .card-icon-avatar {
+      position: absolute;
+      bottom: 0.75rem;
+      left: 1rem;
+      width: 52px;
+      height: 52px;
+      border-radius: var(--radius-sm);
+      border: 2px solid #2563eb;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.6);
+      object-fit: cover;
+      background: #090e18;
+      z-index: 2;
+      transition: transform 0.25s ease, box-shadow 0.25s ease;
+      cursor: pointer;
+    }
+
+    .card-icon-avatar:hover {
+      transform: scale(1.1) rotate(-3deg);
+      box-shadow: 0 0 16px var(--cyan-accent);
+      border-color: var(--cyan-accent);
+    }
+
+    .card-body {
+      padding: 1.1rem 1.1rem 0.9rem;
+      display: flex;
+      flex-direction: column;
+      flex: 1;
+    }
+
+    .card-title {
+      font-size: 1.12rem;
+      font-weight: 600;
+      color: #fff;
+      margin-bottom: 0.35rem;
+      line-height: 1.3;
+      cursor: pointer;
+      transition: color 0.2s;
+    }
+
+    .card-title:hover {
+      color: #60a5fa;
+    }
+
+    .card-meta-row {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      margin-bottom: 0.6rem;
+      font-size: 0.78rem;
+      color: var(--text-dim);
+    }
+
+    .card-platform-tag {
+      background: rgba(255, 255, 255, 0.06);
+      padding: 0.15rem 0.45rem;
+      border-radius: 4px;
+      color: #cbd5e1;
+    }
+
+    .card-desc {
+      color: var(--text-muted);
+      font-size: 0.85rem;
+      line-height: 1.5;
+      margin-bottom: 1rem;
+      display: -webkit-box;
+      -webkit-line-clamp: 2;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
+      flex: 1;
+    }
+
+    .card-actions {
+      display: flex;
+      align-items: center;
+      gap: 0.6rem;
+      margin-top: auto;
+      padding-top: 0.75rem;
+      border-top: 1px solid rgba(255, 255, 255, 0.06);
+    }
+
+    .btn-play-card {
+      flex: 1;
+      padding: 0.65rem 0.9rem;
+      font-size: 0.9rem;
+      font-weight: 600;
+      background: linear-gradient(135deg, var(--blue-primary), #0284c7);
+      color: #fff;
+      border-radius: var(--radius-sm);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.5rem;
+      text-decoration: none;
+      transition: var(--transition);
+      border: none;
+      cursor: pointer;
+      box-shadow: 0 3px 10px rgba(0, 102, 255, 0.3);
+    }
+
+    .btn-play-card:hover {
+      background: linear-gradient(135deg, #1d72fe, #0ea5e9);
+      box-shadow: 0 0 16px var(--blue-glow);
+      transform: translateY(-1px);
+    }
+
+    .btn-icon-square {
+      width: 38px;
+      height: 38px;
+      padding: 0;
+      border-radius: var(--radius-sm);
+      background: var(--bg-surface);
+      border: 1px solid var(--border-color);
+      color: var(--text-muted);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      transition: var(--transition);
+    }
+
+    .btn-icon-square:hover {
+      color: #fff;
+      border-color: var(--blue-primary);
+      background: #18233b;
+    }
+
+    .admin-card-bar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      background: rgba(0, 0, 0, 0.4);
+      padding: 0.4rem 0.8rem;
+      border-top: 1px solid rgba(255, 255, 255, 0.05);
+      font-size: 0.75rem;
+      color: #64748b;
+    }
+
+    .admin-card-actions {
+      display: flex;
+      gap: 0.4rem;
+    }
+
+    .btn-admin-mini {
+      padding: 0.2rem 0.5rem;
+      font-size: 0.72rem;
+      border-radius: 4px;
+      border: 1px solid transparent;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 3px;
+    }
+
+    .btn-admin-edit {
+      background: rgba(37, 99, 235, 0.2);
+      border-color: rgba(37, 99, 235, 0.5);
+      color: #93c5fd;
+    }
+    .btn-admin-edit:hover {
+      background: #2563eb;
+      color: #fff;
+    }
+
+    .btn-admin-del {
+      background: rgba(239, 68, 68, 0.2);
+      border-color: rgba(239, 68, 68, 0.5);
+      color: #fca5a5;
+    }
+    .btn-admin-del:hover {
+      background: #ef4444;
+      color: #fff;
+    }
+
+    /* Empty state */
+    .empty-state {
+      text-align: center;
+      padding: 4rem 2rem;
+      background: var(--bg-card);
+      border-radius: var(--radius-md);
+      border: 1px dashed var(--border-color);
+      grid-column: 1 / -1;
+    }
+    .empty-icon {
+      width: 64px;
+      height: 64px;
+      color: var(--text-dim);
+      margin-bottom: 1rem;
+    }
+
+    /* Modal System */
+    .modal-backdrop {
+      position: fixed;
+      inset: 0;
+      background: rgba(4, 7, 14, 0.85);
+      backdrop-filter: blur(8px);
+      z-index: 200;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 1.5rem;
+      opacity: 0;
+      visibility: hidden;
+      transition: opacity 0.25s ease, visibility 0.25s ease;
+    }
+
+    .modal-backdrop.open {
+      opacity: 1;
+      visibility: visible;
+    }
+
+    .modal-dialog {
+      background: var(--bg-card);
+      border: 1px solid var(--border-color);
+      border-radius: var(--radius-lg);
+      width: 100%;
+      max-width: 620px;
+      max-height: 90vh;
+      display: flex;
+      flex-direction: column;
+      box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.8), 0 0 30px var(--blue-glow);
+      transform: scale(0.95) translateY(10px);
+      transition: transform 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+      overflow: hidden;
+    }
+
+    .modal-backdrop.open .modal-dialog {
+      transform: scale(1) translateY(0);
+    }
+
+    .modal-header {
+      padding: 1.25rem 1.5rem;
+      border-bottom: 1px solid var(--border-color);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      background: #111a2f;
+    }
+
+    .modal-title {
+      font-size: 1.2rem;
+      font-weight: 700;
+      color: #fff;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .modal-close-btn {
+      background: transparent;
+      border: none;
+      color: var(--text-muted);
+      cursor: pointer;
+      width: 32px;
+      height: 32px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 6px;
+      transition: var(--transition);
+    }
+
+    .modal-close-btn:hover {
+      background: rgba(255,255,255,0.1);
+      color: #fff;
+    }
+
+    .modal-body {
+      padding: 1.5rem;
+      overflow-y: auto;
+      flex: 1;
+    }
+
+    .modal-footer {
+      padding: 1rem 1.5rem;
+      border-top: 1px solid var(--border-color);
+      display: flex;
+      justify-content: flex-end;
+      gap: 0.75rem;
+      background: #0c1220;
+    }
+
+    /* Form controls */
+    .form-group {
+      margin-bottom: 1.2rem;
+    }
+
+    .form-label {
+      display: block;
+      font-size: 0.85rem;
+      font-weight: 500;
+      margin-bottom: 0.4rem;
+      color: #cbd5e1;
+    }
+
+    .form-label span.req {
+      color: var(--danger);
+    }
+
+    .form-input, .form-textarea, .form-select {
+      width: 100%;
+      background: #090e1a;
+      border: 1px solid var(--border-color);
+      border-radius: var(--radius-sm);
+      padding: 0.65rem 0.9rem;
+      color: #fff;
+      font-size: 0.9rem;
+      font-family: inherit;
+      outline: none;
+      transition: var(--transition);
+    }
+
+    .form-input:focus, .form-textarea:focus, .form-select:focus {
+      border-color: var(--blue-primary);
+      box-shadow: 0 0 10px var(--blue-glow);
+      background: #0d1526;
+    }
+
+    .form-textarea {
+      resize: vertical;
+      min-height: 80px;
+    }
+
+    .form-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1rem;
+    }
+
+    .form-checkbox-label {
+      display: flex;
+      align-items: center;
+      gap: 0.6rem;
+      cursor: pointer;
+      font-size: 0.88rem;
+      color: #cbd5e1;
+      user-select: none;
+    }
+
+    .form-checkbox {
+      width: 18px;
+      height: 18px;
+      accent-color: var(--blue-primary);
+      cursor: pointer;
+    }
+
+    .image-preview-box {
+      margin-top: 0.5rem;
+      height: 110px;
+      border-radius: var(--radius-sm);
+      border: 1px dashed var(--border-color);
+      background: #070a12;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+      position: relative;
+    }
+
+    .image-preview-box img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    .image-preview-placeholder {
+      font-size: 0.75rem;
+      color: var(--text-dim);
+    }
+
+    /* Game Detail Modal */
+    .detail-hero-banner {
+      width: 100%;
+      height: 240px;
+      object-fit: cover;
+      border-radius: var(--radius-md);
+      margin-bottom: 1.2rem;
+      border: 1px solid var(--border-color);
+    }
+
+    .detail-header-flex {
+      display: flex;
+      gap: 1.2rem;
+      align-items: center;
+      margin-bottom: 1.2rem;
+    }
+
+    .detail-icon {
+      width: 72px;
+      height: 72px;
+      border-radius: var(--radius-md);
+      border: 2px solid var(--blue-primary);
+      box-shadow: 0 0 15px var(--blue-glow);
+      object-fit: cover;
+    }
+
+    /* In-site Player Iframe Modal */
+    .player-modal-dialog {
+      max-width: 1080px;
+      height: 85vh;
+    }
+
+    .player-iframe-container {
+      width: 100%;
+      height: 100%;
+      background: #000;
+      position: relative;
+    }
+
+    .player-iframe {
+      width: 100%;
+      height: 100%;
+      border: none;
+    }
+
+    /* Admin Bar Banner when logged in */
+    .admin-banner-bar {
+      background: linear-gradient(90deg, #1e3a8a, #0369a1);
+      padding: 0.5rem 2rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      font-size: 0.85rem;
+      font-weight: 500;
+      border-bottom: 1px solid rgba(255,255,255,0.2);
+    }
+
+    .admin-banner-left {
+      display: flex;
+      align-items: center;
+      gap: 0.6rem;
+    }
+
+    .admin-banner-tools {
+      display: flex;
+      align-items: center;
+      gap: 0.6rem;
+    }
+
+    /* Toast Notification */
+    .toast-container {
+      position: fixed;
+      bottom: 2rem;
+      right: 2rem;
+      z-index: 999;
+      display: flex;
+      flex-direction: column;
+      gap: 0.75rem;
+      pointer-events: none;
+    }
+
+    .toast {
+      background: var(--bg-surface);
+      border: 1px solid var(--border-color);
+      border-left: 4px solid var(--blue-primary);
+      padding: 0.85rem 1.25rem;
+      border-radius: var(--radius-sm);
+      color: #fff;
+      font-size: 0.88rem;
+      box-shadow: 0 10px 25px rgba(0,0,0,0.5);
+      display: flex;
+      align-items: center;
+      gap: 0.6rem;
+      animation: toastIn 0.3s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+      pointer-events: auto;
+      max-width: 360px;
+    }
+
+    .toast.success { border-left-color: var(--success); }
+    .toast.error { border-left-color: var(--danger); }
+    .toast.warning { border-left-color: var(--warning); }
+
+    @keyframes toastIn {
+      from { opacity: 0; transform: translateY(15px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    /* Footer */
+    .footer {
+      border-top: 1px solid var(--border-color);
+      padding: 2.5rem 2rem;
+      text-align: center;
+      background: #05070d;
+      color: var(--text-dim);
+      font-size: 0.85rem;
+      margin-top: 4rem;
+    }
+
+    .footer a {
+      color: var(--blue-primary);
+      text-decoration: none;
+    }
+
+    /* Responsive */
+    @media (max-width: 768px) {
+      .navbar {
+        padding: 0.8rem 1rem;
+        flex-wrap: wrap;
+      }
+      .search-wrapper {
+        order: 3;
+        max-width: 100%;
+        width: 100%;
+      }
+      .container {
+        padding: 1rem 1rem 3rem;
+      }
+      .hero-content {
+        padding: 1.5rem;
+      }
+      .hero-title {
+        font-size: 1.8rem;
+      }
+      .hero-controls {
+        position: static;
+        padding: 0 1.5rem 1.5rem;
+      }
+      .form-row {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ADMIN STATUS BAR (Visible only when Admin is logged in) -->
+  <div id="adminTopBar" class="admin-banner-bar" style="display: none;">
+    <div class="admin-banner-left">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+      <span><strong>โหมดแอดมิน (Admin Mode) กำลังทำงาน</strong> — คุณสามารถเพิ่ม ลบ หรือแก้ไขเกมส์ได้ทันที</span>
+    </div>
+    <div class="admin-banner-tools">
+      <button class="btn btn-outline" style="padding: 0.25rem 0.6rem; font-size: 0.78rem;" onclick="openAddGameModal()">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>
+        เพิ่มเกมส์ใหม่
+      </button>
+      <button class="btn btn-outline" style="padding: 0.25rem 0.6rem; font-size: 0.78rem;" onclick="exportGameData()">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg>
+        สำรองข้อมูล (JSON)
+      </button>
+      <button class="btn btn-outline" style="padding: 0.25rem 0.6rem; font-size: 0.78rem;" onclick="triggerImportJSON()">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="17 8 12 3 7 8"></polyline><line x1="12" y1="3" x2="12" y2="15"></line></svg>
+        นำเข้าข้อมูล
+      </button>
+      <input type="file" id="importFileInput" accept=".json" style="display: none;" onchange="handleImportJSON(event)">
+      <button class="btn btn-outline" style="padding: 0.25rem 0.6rem; font-size: 0.78rem;" onclick="openChangePasswordModal()">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect><path d="M7 11V7a5 5 0 0 1 10 0v4"></path></svg>
+        เปลี่ยนรหัสผ่าน
+      </button>
+      <button class="btn btn-outline" style="padding: 0.25rem 0.6rem; font-size: 0.78rem;" onclick="resetDefaultGames()">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M23 4v6h-6"></path><path d="M20.49 15a9 9 0 1 1-2.12-9.36L23 10"></path></svg>
+        รีเซ็ตเกมตัวอย่าง
+      </button>
+      <button class="btn btn-danger" style="padding: 0.25rem 0.6rem; font-size: 0.78rem;" onclick="adminLogout()">
+        ออกจากระบบแอดมิน
+      </button>
+    </div>
+  </div>
+
+  <!-- NAVBAR -->
+  <header class="navbar">
+    <a class="brand" onclick="resetFilters()">
+      <div class="brand-logo-box">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <rect x="2" y="6" width="20" height="12" rx="4"></rect>
+          <path d="M6 12h4"></path>
+          <path d="M8 10v4"></path>
+          <circle cx="17" cy="10" r="1"></circle>
+          <circle cx="15" cy="13" r="1"></circle>
+        </svg>
+      </div>
+      <div class="brand-text">
+        GUNDAMGAME
+        <span class="brand-sub">OFFICIAL GAME HUB</span>
+      </div>
+    </a>
+
+    <!-- SEARCH -->
+    <div class="search-wrapper">
+      <svg class="search-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <circle cx="11" cy="11" r="8"></circle>
+        <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+      </svg>
+      <input type="text" id="searchInput" class="search-input" placeholder="ค้นหาชื่อเกม, แนวเกม หรือคีย์เวิร์ด..." oninput="handleSearch(this.value)">
+    </div>
+
+    <!-- ACTIONS -->
+    <div class="nav-actions">
+      <!-- Admin Toggle / Login Button -->
+      <button id="adminLoginBtn" class="btn btn-outline" onclick="openLoginModal()">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>
+        เข้าสู่ระบบ Admin
+      </button>
+
+      <button id="adminAddGameNavBtn" class="btn btn-primary" style="display: none;" onclick="openAddGameModal()">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>
+        เพิ่มเกมส์ใหม่
+      </button>
+    </div>
+  </header>
+
+  <!-- MAIN CONTENT -->
+  <main class="container">
+    
+    <!-- HERO FEATURED CAROUSEL (GOG STYLE) -->
+    <section class="hero-section" id="heroSection">
+      <div class="hero-slider" id="heroSlider">
+        <!-- Rendered by JS -->
+      </div>
+      <div class="hero-controls">
+        <div class="hero-indicators" id="heroIndicators"></div>
+        <button class="hero-nav-btn" onclick="prevHeroSlide()" aria-label="Previous">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="15 18 9 12 15 6"></polyline></svg>
+        </button>
+        <button class="hero-nav-btn" onclick="nextHeroSlide()" aria-label="Next">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"></polyline></svg>
+        </button>
+      </div>
+    </section>
+
+    <!-- SECTION TITLE & STATS -->
+    <div class="section-header">
+      <div class="section-title-wrap">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" color="#00e5ff"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg>
+        <h2 class="section-title">คลังเกมส์ทั้งหมด (Games Catalog)</h2>
+        <span class="section-badge" id="gamesCountBadge">0 เกมส์</span>
+      </div>
+
+      <div style="display: flex; gap: 0.5rem; align-items: center;">
+        <span style="font-size: 0.8rem; color: var(--text-dim);">เรียงตาม:</span>
+        <select id="sortSelect" class="form-select" style="width: auto; padding: 0.35rem 0.8rem; font-size: 0.82rem;" onchange="handleSort(this.value)">
+          <option value="newest">เพิ่มล่าสุด</option>
+          <option value="title">ชื่อเกมส์ A-Z</option>
+          <option value="featured">แนะนำก่อน</option>
+        </select>
+      </div>
+    </div>
+
+    <!-- GENRE FILTER CHIPS -->
+    <div class="filter-bar" id="genreFilterBar">
+      <button class="filter-chip active" onclick="setCategoryFilter('all')">ทั้งหมด (All)</button>
+      <button class="filter-chip" onclick="setCategoryFilter('Simulation')">Simulation / จำลองชีวิต</button>
+      <button class="filter-chip" onclick="setCategoryFilter('Strategy')">Strategy / กลยุทธ์</button>
+      <button class="filter-chip" onclick="setCategoryFilter('RPG')">RPG / ผจญภัย</button>
+      <button class="filter-chip" onclick="setCategoryFilter('Arcade')">Arcade / อาร์เคด</button>
+      <button class="filter-chip" onclick="setCategoryFilter('Party')">Party / ปาร์ตี้</button>
+      <button class="filter-chip" onclick="setCategoryFilter('Casual')">Casual / เล่นเพลิน</button>
+    </div>
+
+    <!-- GAME CARDS GRID -->
+    <div class="game-grid" id="gameGrid">
+      <!-- Rendered dynamically by JavaScript -->
+    </div>
+
+  </main>
+
+  <!-- FOOTER -->
+  <footer class="footer">
+    <p style="margin-bottom: 0.5rem;"><strong>GUNDAMGAME</strong> &bull; เว็บไซต์จัดเก็บและแชร์เกมส์เล่นบนเบราว์เซอร์</p>
+    <p style="color: var(--text-dim); font-size: 0.78rem;">
+      ดีไซน์ธีมสีน้ำเงิน-ดำ-ขาว แรงบันดาลใจจากสไตล์ GOG.com &bull; ผู้เล่นคลิกไอคอนหรือปุ่มเพื่อเล่นเกมส์ได้ทันที
+    </p>
+  </footer>
+
+  <!-- ==================== MODALS ==================== -->
+
+  <!-- 1. ADMIN LOGIN MODAL -->
+  <div class="modal-backdrop" id="loginModal">
+    <div class="modal-dialog" style="max-width: 400px;">
+      <div class="modal-header">
+        <div class="modal-title">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" color="#0066ff"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect><path d="M7 11V7a5 5 0 0 1 10 0v4"></path></svg>
+          เข้าสู่ระบบแอดมิน
+        </div>
+        <button class="modal-close-btn" onclick="closeModal('loginModal')">&times;</button>
+      </div>
+      <form onsubmit="handleLoginSubmit(event)">
+        <div class="modal-body">
+          <p style="font-size: 0.85rem; color: var(--text-muted); margin-bottom: 1.2rem;">
+            สำหรับเจ้าของเว็บไซต์ เพื่อเข้าสู่ระบบเพิ่ม/ลบ/แก้ไขเกมส์ (รหัสผ่านเริ่มต้น: <code style="color: #60a5fa; background: #131d36; padding: 2px 6px; border-radius: 4px;">admin123</code>)
+          </p>
+          <div class="form-group">
+            <label class="form-label">รหัสผ่านแอดมิน (Admin Password)</label>
+            <input type="password" id="adminPasswordInput" class="form-input" placeholder="ใส่รหัสผ่าน..." required autofocus>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-outline" onclick="closeModal('loginModal')">ยกเลิก</button>
+          <button type="submit" class="btn btn-primary">เข้าสู่ระบบ</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- 2. ADD / EDIT GAME MODAL -->
+  <div class="modal-backdrop" id="gameFormModal">
+    <div class="modal-dialog">
+      <div class="modal-header">
+        <div class="modal-title" id="gameFormModalTitle">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" color="#00e5ff"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>
+          เพิ่มเกมส์ใหม่
+        </div>
+        <button class="modal-close-btn" onclick="closeModal('gameFormModal')">&times;</button>
+      </div>
+      <form id="gameDataForm" onsubmit="handleSaveGameSubmit(event)">
+        <input type="hidden" id="formGameId">
+        <div class="modal-body">
+          
+          <div class="form-group">
+            <label class="form-label">ชื่อเกมส์ (Game Title) <span class="req">*</span></label>
+            <input type="text" id="gameTitle" class="form-input" placeholder="เช่น Dragon Quest HTML5, Space Odyssey" required>
+          </div>
+
+          <div class="form-group">
+            <label class="form-label">ลิงก์สำหรับเข้าเล่นเกมส์ (Play Game URL) <span class="req">*</span></label>
+            <input type="url" id="gamePlayUrl" class="form-input" placeholder="https://mygame.itch.io/play หรือ https://user.github.io/game" required>
+            <small style="color: var(--text-dim); font-size: 0.75rem;">วางลิงก์ที่สามารถเปิดเล่นเกมส์ได้ทันทีบนเว็บ</small>
+          </div>
+
+          <div class="form-row">
+            <div class="form-group">
+              <label class="form-label">หมวดหมู่ / แนวเกมส์ <span class="req">*</span></label>
+              <select id="gameGenre" class="form-select" required>
+                <option value="Simulation">Simulation (จำลองชีวิต / บริหาร)</option>
+                <option value="Strategy">Strategy (วางกลยุทธ์ / การ์ดเกม)</option>
+                <option value="RPG">RPG (สวมบทบาท / ผจญภัย)</option>
+                <option value="Arcade">Arcade (อาร์เคด / คลาสสิก)</option>
+                <option value="Party">Party (ปาร์ตี้ / บอร์ดเกม)</option>
+                <option value="Casual">Casual (เล่นเพลิน / ทั่วไป)</option>
+                <option value="Action">Action (ต่อสู้ / แอ็กชัน)</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label class="form-label">แท็กแพลตฟอร์ม</label>
+              <input type="text" id="gamePlatform" class="form-input" placeholder="เช่น Web, Mobile, HTML5, 2D" value="Web / HTML5">
+            </div>
+          </div>
+
+          <!-- ICON URL -->
+          <div class="form-group">
+            <label class="form-label">ลิงก์ไอคอนเกมส์ (Game Icon URL - รูปสี่เหลี่ยมจัตุรัส)</label>
+            <input type="url" id="gameIconUrl" class="form-input" placeholder="https://example.com/icon.png" oninput="updatePreviewIcon(this.value)">
+            <small style="color: var(--text-dim); font-size: 0.75rem;">ไอคอนนี้จะแสดงตรงการ์ดเกมส์ และผู้เล่นสามารถกดที่ไอคอนนี้เพื่อเริ่มเล่นเกมส์ได้ทันที</small>
+            <div class="image-preview-box" style="height: 64px; width: 64px; margin-top: 6px;">
+              <img id="iconPreviewImg" src="" alt="Icon Preview" style="display: none;">
+              <span id="iconPreviewPlaceholder" class="image-preview-placeholder">ตัวอย่างไอคอน</span>
+            </div>
+          </div>
+
+          <!-- BANNER / PREVIEW IMAGE URL -->
+          <div class="form-group">
+            <label class="form-label">ลิงก์ภาพตัวอย่าง / แบนเนอร์ (Cover Banner URL)</label>
+            <input type="url" id="gameBannerUrl" class="form-input" placeholder="https://example.com/banner.jpg" oninput="updatePreviewBanner(this.value)">
+            <small style="color: var(--text-dim); font-size: 0.75rem;">ภาพปกแสดงตัวอย่างเกมส์ อัตราส่วนประมาณ 16:9</small>
+            <div class="image-preview-box">
+              <img id="bannerPreviewImg" src="" alt="Banner Preview" style="display: none;">
+              <span id="bannerPreviewPlaceholder" class="image-preview-placeholder">ตัวอย่างภาพแบนเนอร์ปกเกมส์</span>
+            </div>
+          </div>
+
+          <!-- DESCRIPTION -->
+          <div class="form-group">
+            <label class="form-label">คำอธิบายเกมส์ / วิธีเล่นย่อๆ (Description)</label>
+            <textarea id="gameDescription" class="form-textarea" placeholder="บรรยายเนื้อเรื่อง ระบบเกม หรือปุ่มที่ใช้เล่น (เช่น ใช้ WASD เคลื่อนที่)..."></textarea>
+          </div>
+
+          <!-- OPTIONS -->
+          <div class="form-group">
+            <label class="form-checkbox-label">
+              <input type="checkbox" id="gameIsFeatured" class="form-checkbox">
+              <span>🌟 ตั้งเป็นเกมส์แนะนำเด่น (แสดงในแบนเนอร์ Hero ด้านบนสุด)</span>
+            </label>
+          </div>
+
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-outline" onclick="closeModal('gameFormModal')">ยกเลิก</button>
+          <button type="submit" class="btn btn-primary" id="saveGameBtn">บันทึกข้อมูลเกมส์</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- 3. GAME DETAIL MODAL -->
+  <div class="modal-backdrop" id="gameDetailModal">
+    <div class="modal-dialog">
+      <div class="modal-header">
+        <div class="modal-title" id="detailGameTitle">รายละเอียดเกมส์</div>
+        <button class="modal-close-btn" onclick="closeModal('gameDetailModal')">&times;</button>
+      </div>
+      <div class="modal-body" id="detailModalBody">
+        <!-- Injected via JS -->
+      </div>
+      <div class="modal-footer" id="detailModalFooter">
+        <!-- Play Buttons Injected via JS -->
+      </div>
+    </div>
+  </div>
+
+  <!-- 4. IN-PAGE GAME RUNNER MODAL (IFRAME) -->
+  <div class="modal-backdrop" id="gamePlayerModal">
+    <div class="modal-dialog player-modal-dialog">
+      <div class="modal-header">
+        <div class="modal-title" id="playerModalTitle">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" color="#00e5ff"><polygon points="5 3 19 12 5 21 5 3"></polygon></svg>
+          <span id="playerGameName">เล่นเกมส์</span>
+        </div>
+        <div style="display: flex; gap: 0.5rem; align-items: center;">
+          <a id="playerExternalLink" href="#" target="_blank" class="btn btn-outline" style="padding: 0.35rem 0.75rem; font-size: 0.8rem;">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path><polyline points="15 3 21 3 21 9"></polyline><line x1="10" y1="14" x2="21" y2="3"></line></svg>
+            เปิดในแท็บใหม่
+          </a>
+          <button class="modal-close-btn" onclick="closePlayerModal()">&times;</button>
+        </div>
+      </div>
+      <div class="player-iframe-container">
+        <iframe id="gameIframe" class="player-iframe" allow="autoplay; fullscreen; gamepad; focus-without-user-activation *"></iframe>
+      </div>
+    </div>
+  </div>
+
+  <!-- 5. CHANGE ADMIN PASSWORD MODAL -->
+  <div class="modal-backdrop" id="changePasswordModal">
+    <div class="modal-dialog" style="max-width: 420px;">
+      <div class="modal-header">
+        <div class="modal-title">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" color="#00e5ff"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect><path d="M7 11V7a5 5 0 0 1 10 0v4"></path></svg>
+          เปลี่ยนรหัสผ่านแอดมิน
+        </div>
+        <button class="modal-close-btn" onclick="closeModal('changePasswordModal')">&times;</button>
+      </div>
+      <form onsubmit="handleChangePasswordSubmit(event)">
+        <div class="modal-body">
+          <div class="form-group">
+            <label class="form-label">รหัสผ่านปัจจุบัน</label>
+            <input type="password" id="oldAdminPass" class="form-input" placeholder="ใส่รหัสผ่านปัจจุบัน..." required>
+          </div>
+          <div class="form-group">
+            <label class="form-label">รหัสผ่านใหม่ (อย่างน้อย 4 ตัวอักษร)</label>
+            <input type="password" id="newAdminPass" class="form-input" placeholder="ระบุรหัสผ่านใหม่..." required minlength="4">
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-outline" onclick="closeModal('changePasswordModal')">ยกเลิก</button>
+          <button type="submit" class="btn btn-primary">บันทึกรหัสผ่าน</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- TOAST CONTAINER -->
+  <div class="toast-container" id="toastContainer"></div>
+
+  <!-- ==================== JAVASCRIPT ==================== -->
+  <script>
+    /* Default initial database with sample playable web games */
+    const DEFAULT_GAMES = [
+      {
+        id: "ghost_clan",
+        title: "ผีประจำตระกูล (จะยังไง ตระกูลฉันก็ต้องรอด!)",
+        playUrl: "https://glittering-klepon-3dab3c.netlify.app/",
+        iconUrl: "assets/ghost_clan_icon.png",
+        bannerUrl: "assets/ghost_clan_banner.jpg",
+        genre: "Simulation",
+        platform: "HTML5 / Web / Mobile",
+        description: "จะยังไง ตระกูลฉันก็ต้องรอด! เฝ้ามองลูกหลานจากเบื้องบน คอยกระซิบ คุ้มครอง และสืบสายเลือดให้ยาวไกลที่สุด สวมบทบาทผีบรรพบุรุษคอยชี้นำลูกหลาน เสกอาหาร รักษาอาการป่วย บริหารสถานะความต้องการ และปกป้องครอบครัวจากภัยร้ายยามค่ำคืนในยุคดึกดำบรรพ์",
+        screenshots: [
+          "assets/screenshot_title.png",
+          "assets/screenshot_gameplay1.png",
+          "assets/screenshot_night_vampire.png",
+          "assets/screenshot_stats.png"
+        ],
+        isFeatured: true,
+        createdAt: 1730465000000
+      },
+      {
+        id: "vanguard_online",
+        title: "Cardfight!! Vanguard Online",
+        playUrl: "https://storied-clafoutis-544e7a.netlify.app/vanguard/index.html",
+        iconUrl: "assets/vanguard_icon.png",
+        bannerUrl: "assets/vanguard_banner.jpg",
+        genre: "Strategy",
+        platform: "Web / PC / Mobile",
+        description: "จัดเด็ค ชวนเพื่อน แล้วมาเล่นการ์ดไฟท์กัน! เกม Cardfight!! Vanguard ออนไลน์บนเบราว์เซอร์ ประลองฝีมือกับเพื่อนแบบเรียลไทม์ (ห้องรหัส 6 หลัก) เล่นโหมดแรงค์ หรือฝึกซ้อมกับบอท AI ระดับ EASY ถึง GOD พร้อมระบบจำลองสนามแข่งขัน VC, RC และเอฟเฟกต์การ์ดครบครัน",
+        screenshots: [
+          "assets/vanguard_lobby.png",
+          "assets/vanguard_match.png"
+        ],
+        isFeatured: true,
+        createdAt: 1730464000000
+      },
+      {
+        id: "math_tear_th",
+        title: "MATH TEAR TH - โลกแห่งคณิตเวท",
+        playUrl: "https://7717-create.github.io/math-tear-th/",
+        iconUrl: "assets/math_tear_icon.png",
+        bannerUrl: "assets/math_tear_banner.jpg",
+        genre: "RPG",
+        platform: "HTML5 / Web / Mobile & PC",
+        description: "โลกแห่งคณิตเวท! การผจญภัยสไตล์ Isometric Pixel RPG ผสมผสานกลิ่นอายศิลปะไทยแฟนตาซี ออกเดินทางสำรวจหมู่บ้าน ไร่อรุณ พูดคุยกับ NPC ทำฟาร์ม และประลองศึกต่อสู้แบบเทิร์นเบส วางแผนคอมโบเวทมนตร์ ปะทะมอนสเตอร์ในดินแดนโบราณ พร้อมระบบเซฟข้อมูลในตัว",
+        screenshots: [
+          "assets/math_tear_title.png",
+          "assets/math_tear_village.png",
+          "assets/math_tear_battle.jpg"
+        ],
+        isFeatured: true,
+        createdAt: 1730464000000
+      },
+      {
+        id: "keyboard_warrior",
+        title: "Keyboard Warrior (นักรบคีย์บอร์ด)",
+        playUrl: "https://iridescent-tarsier-a9c910.netlify.app/",
+        iconUrl: "assets/keyboard_warrior_icon.png",
+        bannerUrl: "assets/keyboard_warrior_banner.jpg",
+        genre: "Arcade",
+        platform: "Web / PC Keyboard / Retro",
+        description: "KEYBOARD_WARRIOR_DEMO.EXE เกมฝึกพิมพ์ดีดภาษาไทยสไตล์ Stickman Action เรโทรยุค 90s! สวมบทบาทนักสู้พิมพ์ดีด พิมพ์คำศัพท์ภาษาไทยให้ทันเวลาเพื่อปล่อยคอมโบหมัดมวยโค่นเหล่าศัตรูและโจรพเนจร",
+        screenshots: [
+          "assets/keyboard_warrior_1.png",
+          "assets/keyboard_warrior_2.png"
+        ],
+        isFeatured: true,
+        createdAt: 1730463000000
+      },
+      {
+        id: "ilion_boardgame",
+        title: "ILION: เศรษฐีมหาสงครามทรอย",
+        playUrl: "https://candid-biscuit-8f9c70.netlify.app/",
+        iconUrl: "assets/ilion_icon.png",
+        bannerUrl: "assets/ilion_banner.jpg",
+        genre: "Strategy",
+        platform: "Web / HTML5 / Multiplayer Online",
+        description: "ILION: เศรษฐีมหาสงครามทรอย (Epic Greek Mythology Board Game) เกมกระดานเศรษฐีธีมสงครามกรีกโบราณ สวมบทบาททวยเทพและเหล่าวีรบุรุษแห่งทรอย เช่น เอเธน่า, อคิลลีส, อพอลโล, โอดิสซีอุส ทอยลูกเต๋า ยึดครองเมืองศักดิ์สิทธิ์ ปลูกสร้างวิหาร และชิงชัยสู่ชัยชนะแห่งมหากาพย์ทรอย",
+        screenshots: [
+          "assets/ilion_lobby.png",
+          "assets/ilion_board.png"
+        ],
+        isFeatured: true,
+        createdAt: 1730462000000
+      },
+      {
+        id: "farm_sukjai",
+        title: "ฟาร์มสุขใจ 3D (Happy Farm Online)",
+        playUrl: "https://euphonious-otter-27afa0.netlify.app/",
+        iconUrl: "assets/farm_icon.png",
+        bannerUrl: "assets/farm_banner.jpg",
+        genre: "Casual",
+        platform: "Web / 3D HTML5 / Mobile & PC Co-op",
+        description: "ยินดีต้อนรับสู่ฟาร์มสุขใจ! เกมปลูกผักทำฟาร์มจำลอง 3D สไตล์ Isometric แสนอบอุ่น ปลูกพืช ผัก ผลไม้ รดน้ำ พรวนดิน เลี้ยงสัตว์ เปิดฟาร์มเล่นร่วมกับเพื่อนแบบเรียลไทม์ผ่านรหัสห้อง รองรับทั้งการเล่นบนคอมพิวเตอร์และมือถือ",
+        screenshots: [
+          "assets/farm_lobby.jpg",
+          "assets/farm_gameplay.png"
+        ],
+        isFeatured: true,
+        createdAt: 1730461000000
+      },
+      {
+        id: "aomao_aohak",
+        title: "เอาเมาหรือเอาฮาก (Drink or Laugh Party)",
+        playUrl: "https://subtle-sable-e184e0.netlify.app/",
+        iconUrl: "assets/aomao_icon.png",
+        bannerUrl: "assets/aomao_banner.jpg",
+        genre: "Party",
+        platform: "Web / Mobile & PC (Multiplayer)",
+        description: "เกมปาร์ตี้ขี้เหล้าสุดฮา 🍺 การ์ดภารกิจ 85 ใบ เน้นดื่มจัดเต็ม! สร้างห้องเล่นกับเพื่อนแบบออนไลน์ สุ่มจั่วการ์ดคำสั่ง ท้าประชิด และทำภารกิจสุดป่วน ใครทำไม่ได้หรือแพ้โหวตต้องดื่มแทน สนุกสนานครื้นเครงในทุกวงสังสรรค์",
+        screenshots: [
+          "assets/aomao_lobby.png",
+          "assets/aomao_card.png"
+        ],
+        isFeatured: true,
+        createdAt: 1730460000000
+      }
+    ];
+
+    // LocalStorage Keys
+    const STORAGE_KEY = "my_game_vault_games_v7";
+    const ADMIN_PASS_KEY = "my_game_vault_admin_pass";
+    const ADMIN_SESSION_KEY = "my_game_vault_admin_session";
+
+    // App State
+    let games = [];
+    let isAdmin = false;
+    let currentFilter = "all";
+    let currentSearch = "";
+    let currentSort = "newest";
+    let heroSliderTimer = null;
+    let heroCurrentIndex = 0;
+
+    // Fallback Images
+    const DEFAULT_ICON = "assets/ghost_clan_icon.png";
+    const DEFAULT_BANNER = "assets/ghost_clan_banner.jpg";
+
+    /* ==========================================================
+       INITIALIZATION
+       ========================================================== */
+    function init() {
+      // 1. Load Admin Password if not set
+      if (!localStorage.getItem(ADMIN_PASS_KEY)) {
+        localStorage.setItem(ADMIN_PASS_KEY, "admin123");
+      }
+
+      // 2. Load Games Data
+      const stored = localStorage.getItem(STORAGE_KEY);
+      if (stored) {
+        try {
+          games = JSON.parse(stored);
+        } catch (e) {
+          console.error("Failed to parse stored games, reverting to defaults", e);
+          games = JSON.parse(JSON.stringify(DEFAULT_GAMES));
+          saveGames();
+        }
+      } else {
+        games = JSON.parse(JSON.stringify(DEFAULT_GAMES));
+        saveGames();
+      }
+
+      // Sync and maintain official ordering for all 7 games
+      const orderIds = [
+        "ghost_clan",
+        "vanguard_online",
+        "math_tear_th",
+        "keyboard_warrior",
+        "ilion_boardgame",
+        "farm_sukjai",
+        "aomao_aohak"
+      ];
+
+      orderIds.forEach(id => {
+        const def = DEFAULT_GAMES.find(g => g.id === id);
+        const idx = games.findIndex(g => g.id === id);
+        if (idx === -1) {
+          games.push(def);
+        } else {
+          games[idx] = { ...def, ...games[idx] };
+        }
+      });
+
+      // Maintain official order at top
+      games.sort((a, b) => {
+        const idxA = orderIds.indexOf(a.id);
+        const idxB = orderIds.indexOf(b.id);
+        if (idxA !== -1 && idxB !== -1) return idxA - idxB;
+        if (idxA !== -1) return -1;
+        if (idxB !== -1) return 1;
+        return (b.createdAt || 0) - (a.createdAt || 0);
+      });
+      saveGames();
+
+      // 3. Check Admin Session
+      const session = sessionStorage.getItem(ADMIN_SESSION_KEY);
+      if (session === "true") {
+        isAdmin = true;
+      }
+
+      updateAdminUI();
+      renderAll();
+      setupHeroAutoPlay();
+    }
+
+    function saveGames() {
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(games));
+    }
+
+    /* ==========================================================
+       RENDER FUNCTIONS
+       ========================================================== */
+    function renderAll() {
+      renderHero();
+      renderGames();
+    }
+
+    // Render Hero Carousel with Featured Games
+    function renderHero() {
+      const heroSlider = document.getElementById("heroSlider");
+      const heroIndicators = document.getElementById("heroIndicators");
+      const heroSection = document.getElementById("heroSection");
+
+      let featuredGames = games.filter(g => g.isFeatured);
+      if (featuredGames.length === 0) {
+        // If none marked featured, take up to 3 latest
+        featuredGames = games.slice(0, 3);
+      }
+
+      if (featuredGames.length === 0) {
+        heroSection.style.display = "none";
+        return;
+      }
+      heroSection.style.display = "block";
+
+      if (heroCurrentIndex >= featuredGames.length) {
+        heroCurrentIndex = 0;
+      }
+
+      // Render Slides
+      heroSlider.innerHTML = featuredGames.map((game, index) => `
+        <div class="hero-slide ${index === heroCurrentIndex ? 'active' : ''}" data-index="${index}">
+          <div class="hero-bg" style="background-image: url('${escapeHtml(game.bannerUrl || DEFAULT_BANNER)}');"></div>
+          <div class="hero-overlay"></div>
+          <div class="hero-content">
+            <div class="hero-badge">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg>
+              เกมส์แนะนำเด่น &bull; ${escapeHtml(game.genre)}
+            </div>
+            <h1 class="hero-title">${escapeHtml(game.title)}</h1>
+            <p class="hero-desc">${escapeHtml(game.description || 'เกมส์เล่นบนเบราว์เซอร์ เข้าเล่นได้ทันทีโดยไม่ต้องติดตั้ง')}</p>
+            
+            <div class="hero-buttons">
+              <img src="${escapeHtml(game.iconUrl || DEFAULT_ICON)}" alt="Icon" class="hero-game-icon" title="คลิกเพื่อเริ่มเล่นทันที" onclick="playGameDirect('${game.id}')">
+              
+              <button class="btn btn-primary" style="padding: 0.75rem 1.6rem; font-size: 1rem;" onclick="playGameDirect('${game.id}')">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><polygon points="5 3 19 12 5 21 5 3"></polygon></svg>
+                เข้าเล่นเกมส์นี้เลย
+              </button>
+
+              <button class="btn btn-outline" style="padding: 0.75rem 1.2rem;" onclick="openGameDetail('${game.id}')">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="16" x2="12" y2="12"></line><line x1="12" y1="8" x2="12.01" y2="8"></line></svg>
+                ดูรายละเอียด
+              </button>
+            </div>
+          </div>
+        </div>
+      `).join('');
+
+      // Render Indicators
+      heroIndicators.innerHTML = featuredGames.map((_, index) => `
+        <div class="hero-dot ${index === heroCurrentIndex ? 'active' : ''}" onclick="goToHeroSlide(${index})"></div>
+      `).join('');
+    }
+
+    function setupHeroAutoPlay() {
+      if (heroSliderTimer) clearInterval(heroSliderTimer);
+      heroSliderTimer = setInterval(() => {
+        nextHeroSlide();
+      }, 7000);
+    }
+
+    function nextHeroSlide() {
+      let featuredGames = games.filter(g => g.isFeatured);
+      if (featuredGames.length <= 1) return;
+      heroCurrentIndex = (heroCurrentIndex + 1) % featuredGames.length;
+      updateHeroSlideUI();
+    }
+
+    function prevHeroSlide() {
+      let featuredGames = games.filter(g => g.isFeatured);
+      if (featuredGames.length <= 1) return;
+      heroCurrentIndex = (heroCurrentIndex - 1 + featuredGames.length) % featuredGames.length;
+      updateHeroSlideUI();
+    }
+
+    function goToHeroSlide(index) {
+      heroCurrentIndex = index;
+      updateHeroSlideUI();
+      setupHeroAutoPlay();
+    }
+
+    function updateHeroSlideUI() {
+      const slides = document.querySelectorAll('.hero-slide');
+      const dots = document.querySelectorAll('.hero-dot');
+      slides.forEach((slide, idx) => {
+        if (idx === heroCurrentIndex) slide.classList.add('active');
+        else slide.classList.remove('active');
+      });
+      dots.forEach((dot, idx) => {
+        if (idx === heroCurrentIndex) dot.classList.add('active');
+        else dot.classList.remove('active');
+      });
+    }
+
+    // Render Game Cards Grid
+    function renderGames() {
+      const grid = document.getElementById("gameGrid");
+      const badge = document.getElementById("gamesCountBadge");
+
+      // Filter
+      let filtered = games.filter(g => {
+        const matchesCategory = (currentFilter === "all") || (g.genre.toLowerCase() === currentFilter.toLowerCase());
+        const searchTarget = `${g.title} ${g.genre} ${g.description} ${g.platform}`.toLowerCase();
+        const matchesSearch = !currentSearch || searchTarget.includes(currentSearch.toLowerCase());
+        return matchesCategory && matchesSearch;
+      });
+
+      // Sort
+      if (currentSort === "newest") {
+        filtered.sort((a, b) => (b.createdAt || 0) - (a.createdAt || 0));
+      } else if (currentSort === "title") {
+        filtered.sort((a, b) => a.title.localeCompare(b.title, 'th'));
+      } else if (currentSort === "featured") {
+        filtered.sort((a, b) => (b.isFeatured ? 1 : 0) - (a.isFeatured ? 1 : 0));
+      }
+
+      badge.innerText = `${filtered.length} เกมส์`;
+
+      if (filtered.length === 0) {
+        grid.innerHTML = `
+          <div class="empty-state">
+            <svg class="empty-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+              <circle cx="12" cy="12" r="10"></circle>
+              <line x1="8" y1="12" x2="16" y2="12"></line>
+            </svg>
+            <h3 style="color: #fff; margin-bottom: 0.5rem; font-size: 1.2rem;">ไม่พบเกมส์ที่คุณกำลังค้นหา</h3>
+            <p style="color: var(--text-muted); font-size: 0.9rem; margin-bottom: 1.5rem;">
+              ลองเปลี่ยนคำค้นหา หรือเลือกหมวดหมู่อื่นดูนะ
+            </p>
+            <button class="btn btn-outline" onclick="resetFilters()">ล้างตัวกรองทั้งหมด</button>
+            ${isAdmin ? `
+              <div style="margin-top: 1rem;">
+                <button class="btn btn-primary" onclick="openAddGameModal()">+ เพิ่มเกมส์ใหม่ตอนนี้</button>
+              </div>
+            ` : ''}
+          </div>
+        `;
+        return;
+      }
+
+      grid.innerHTML = filtered.map(game => `
+        <div class="game-card" data-id="${game.id}">
+          <!-- Banner & Icon -->
+          <div class="card-banner-wrap" onclick="openGameDetail('${game.id}')">
+            <img class="card-banner" src="${escapeHtml(game.bannerUrl || DEFAULT_BANNER)}" alt="${escapeHtml(game.title)}" loading="lazy" onerror="this.src='${DEFAULT_BANNER}'">
+            <div class="card-banner-gradient"></div>
+            
+            <span class="card-genre-badge">${escapeHtml(game.genre)}</span>
+            
+            ${game.isFeatured ? `
+              <span class="card-featured-badge">
+                <svg width="10" height="10" viewBox="0 0 24 24" fill="currentColor"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg>
+                แนะนำ
+              </span>
+            ` : ''}
+
+            <!-- Game Icon Badge (Clickable to start game) -->
+            <img 
+              class="card-icon-avatar" 
+              src="${escapeHtml(game.iconUrl || DEFAULT_ICON)}" 
+              alt="Icon" 
+              title="คลิกไอคอนเพื่อเล่นทันที" 
+              onclick="event.stopPropagation(); playGameDirect('${game.id}')"
+              onerror="this.src='${DEFAULT_ICON}'"
+            >
+          </div>
+
+          <!-- Card Body -->
+          <div class="card-body">
+            <div class="card-meta-row">
+              <span class="card-platform-tag">${escapeHtml(game.platform || 'Web')}</span>
+              <span>&bull;</span>
+              <span>เล่นฟรีบนเว็บ</span>
+            </div>
+
+            <h3 class="card-title" onclick="openGameDetail('${game.id}')">${escapeHtml(game.title)}</h3>
+            <p class="card-desc">${escapeHtml(game.description || 'กดเล่นเพื่อเข้าสู่โลกแห่งความมันส์บนบราวเซอร์')}</p>
+
+            <div class="card-actions">
+              <button class="btn-play-card" onclick="playGameDirect('${game.id}')" title="เปิดเข้าสู่หน้าเล่นเกมส์ทันที">
+                <svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor"><polygon points="5 3 19 12 5 21 5 3"></polygon></svg>
+                <span>เล่นเกมส์นี้</span>
+              </button>
+
+              <button class="btn-icon-square" onclick="openGameDetail('${game.id}')" title="ดูรายละเอียดเพิ่มเติม">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="16" x2="12" y2="12"></line><line x1="12" y1="8" x2="12.01" y2="8"></line></svg>
+              </button>
+
+              <button class="btn-icon-square" onclick="openGameInPage('${game.id}')" title="เล่นในกรอบบนหน้านี้">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="3" width="20" height="14" rx="2" ry="2"></rect><line x1="8" y1="21" x2="16" y2="21"></line><line x1="12" y1="17" x2="12" y2="21"></line></svg>
+              </button>
+            </div>
+          </div>
+
+          <!-- Admin Quick Bar (Only visible when logged in) -->
+          ${isAdmin ? `
+            <div class="admin-card-bar">
+              <span>Admin Control</span>
+              <div class="admin-card-actions">
+                <button class="btn-admin-mini btn-admin-edit" onclick="openEditGameModal('${game.id}')">
+                  <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 20h9"></path><path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"></path></svg>
+                  แก้ไข
+                </button>
+                <button class="btn-admin-mini btn-admin-del" onclick="deleteGame('${game.id}')">
+                  <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="3 6 5 6 21 6"></polyline><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path></svg>
+                  ลบ
+                </button>
+              </div>
+            </div>
+          ` : ''}
+
+        </div>
+      `).join('');
+    }
+
+    /* ==========================================================
+       PLAY ACTIONS
+       ========================================================== */
+    // Direct link click: opens playUrl in new tab
+    function playGameDirect(id) {
+      const game = games.find(g => g.id === id);
+      if (!game || !game.playUrl) {
+        showToast("ไม่พบลิงก์สำหรับเข้าเล่นเกมนี้", "error");
+        return;
+      }
+      showToast(`กำลังเปิดเกม "${game.title}"...`, "info");
+      window.open(game.playUrl, "_blank", "noopener,noreferrer");
+    }
+
+    // Play in modal (iframe)
+    function openGameInPage(id) {
+      const game = games.find(g => g.id === id);
+      if (!game || !game.playUrl) {
+        showToast("ไม่พบลิงก์เข้าเล่น", "error");
+        return;
+      }
+      document.getElementById("playerGameName").innerText = game.title;
+      document.getElementById("playerExternalLink").href = game.playUrl;
+      const iframe = document.getElementById("gameIframe");
+      iframe.src = game.playUrl;
+      openModal("gamePlayerModal");
+    }
+
+    function closePlayerModal() {
+      const iframe = document.getElementById("gameIframe");
+      iframe.src = "about:blank"; // stop audio/game
+      closeModal("gamePlayerModal");
+    }
+
+    /* ==========================================================
+       GAME DETAIL MODAL
+       ========================================================== */
+    function openGameDetail(id) {
+      const game = games.find(g => g.id === id);
+      if (!game) return;
+
+      document.getElementById("detailGameTitle").innerText = game.title;
+      
+      const body = document.getElementById("detailModalBody");
+      body.innerHTML = `
+        <img class="detail-hero-banner" src="${escapeHtml(game.bannerUrl || DEFAULT_BANNER)}" alt="Banner" onerror="this.src='${DEFAULT_BANNER}'">
+        
+        <div class="detail-header-flex">
+          <img class="detail-icon" src="${escapeHtml(game.iconUrl || DEFAULT_ICON)}" alt="Icon" onerror="this.src='${DEFAULT_ICON}'">
+          <div>
+            <h2 style="font-size: 1.3rem; margin-bottom: 0.25rem;">${escapeHtml(game.title)}</h2>
+            <div style="display: flex; gap: 0.5rem; flex-wrap: wrap;">
+              <span class="card-genre-badge" style="position: static;">${escapeHtml(game.genre)}</span>
+              <span class="card-platform-tag">${escapeHtml(game.platform || 'Web')}</span>
+              ${game.isFeatured ? '<span class="card-featured-badge" style="position: static;">⭐ แนะนำ</span>' : ''}
+            </div>
+          </div>
+        </div>
+
+        <div style="margin-bottom: 1.5rem; background: #0c1221; padding: 1rem; border-radius: 8px; border: 1px solid var(--border-color);">
+          <h4 style="font-size: 0.88rem; color: #93c5fd; margin-bottom: 0.4rem;">คำอธิบายเกมส์ & วิธีการเล่น</h4>
+          <p style="color: #cbd5e1; font-size: 0.9rem; line-height: 1.6; white-space: pre-line;">${escapeHtml(game.description || 'ไม่มีคำอธิบายเพิ่มเติม')}</p>
+        </div>
+
+        ${game.screenshots && game.screenshots.length > 0 ? `
+          <div style="margin-bottom: 1.5rem;">
+            <h4 style="font-size: 0.88rem; color: #93c5fd; margin-bottom: 0.6rem;">ภาพตัวอย่างจากในเกม (Screenshots)</h4>
+            <div style="display: flex; gap: 0.75rem; overflow-x: auto; padding-bottom: 0.5rem;">
+              ${game.screenshots.map(s => `
+                <img src="${escapeHtml(s)}" style="height: 140px; border-radius: 6px; border: 1px solid var(--border-color); cursor: pointer; transition: transform 0.2s; object-fit: contain; background: #000; flex-shrink: 0;" onclick="window.open('${escapeHtml(s)}', '_blank')" title="คลิกเพื่อดูภาพเต็ม" onmouseover="this.style.transform='scale(1.03)'" onmouseout="this.style.transform='scale(1)'">
+              `).join('')}
+            </div>
+          </div>
+        ` : ''}
+
+        <div style="font-size: 0.78rem; color: var(--text-dim);">
+          <span>ลิงก์เข้าเล่น: </span>
+          <a href="${escapeHtml(game.playUrl)}" target="_blank" style="color: var(--cyan-accent); word-break: break-all;">${escapeHtml(game.playUrl)}</a>
+        </div>
+      `;
+
+      const footer = document.getElementById("detailModalFooter");
+      footer.innerHTML = `
+        <button class="btn btn-outline" onclick="closeModal('gameDetailModal')">ปิด</button>
+        <button class="btn btn-outline" onclick="closeModal('gameDetailModal'); openGameInPage('${game.id}')">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="3" width="20" height="14" rx="2" ry="2"></rect></svg>
+          เล่นบนหน้านี้
+        </button>
+        <button class="btn btn-primary" onclick="playGameDirect('${game.id}')">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><polygon points="5 3 19 12 5 21 5 3"></polygon></svg>
+          เปิดเล่นในแท็บใหม่ (แนะนำ)
+        </button>
+      `;
+
+      openModal("gameDetailModal");
+    }
+
+    /* ==========================================================
+       SEARCH, FILTER, SORT
+       ========================================================== */
+    function handleSearch(val) {
+      currentSearch = val.trim();
+      renderGames();
+    }
+
+    function setCategoryFilter(cat) {
+      currentFilter = cat;
+      const chips = document.querySelectorAll("#genreFilterBar .filter-chip");
+      chips.forEach(chip => {
+        if ((cat === 'all' && chip.innerText.includes('ทั้งหมด')) || 
+            (chip.innerText.toLowerCase().includes(cat.toLowerCase()))) {
+          chip.classList.add('active');
+        } else {
+          chip.classList.remove('active');
+        }
+      });
+      renderGames();
+    }
+
+    function handleSort(val) {
+      currentSort = val;
+      renderGames();
+    }
+
+    function resetFilters() {
+      currentFilter = "all";
+      currentSearch = "";
+      currentSort = "newest";
+      document.getElementById("searchInput").value = "";
+      document.getElementById("sortSelect").value = "newest";
+      setCategoryFilter('all');
+      renderAll();
+    }
+
+    /* ==========================================================
+       ADMIN SYSTEM (LOGIN, ADD, EDIT, DELETE)
+       ========================================================== */
+    function updateAdminUI() {
+      const topBar = document.getElementById("adminTopBar");
+      const loginBtn = document.getElementById("adminLoginBtn");
+      const addNavBtn = document.getElementById("adminAddGameNavBtn");
+
+      if (isAdmin) {
+        topBar.style.display = "flex";
+        loginBtn.style.display = "none";
+        addNavBtn.style.display = "inline-flex";
+      } else {
+        topBar.style.display = "none";
+        loginBtn.style.display = "inline-flex";
+        addNavBtn.style.display = "none";
+      }
+    }
+
+    function openLoginModal() {
+      document.getElementById("adminPasswordInput").value = "";
+      openModal("loginModal");
+    }
+
+    function handleLoginSubmit(e) {
+      e.preventDefault();
+      const inputPass = document.getElementById("adminPasswordInput").value.trim();
+      const realPass = localStorage.getItem(ADMIN_PASS_KEY) || "admin123";
+
+      if (inputPass === realPass) {
+        isAdmin = true;
+        sessionStorage.setItem(ADMIN_SESSION_KEY, "true");
+        updateAdminUI();
+        renderAll();
+        closeModal("loginModal");
+        showToast("ยินดีต้อนรับแอดมิน! คุณสามารถเพิ่ม/แก้ไขเกมส์ได้แล้ว", "success");
+      } else {
+        showToast("รหัสผ่านไม่ถูกต้อง กรุณาลองใหม่อีกครั้ง", "error");
+      }
+    }
+
+    function adminLogout() {
+      if (confirm("คุณต้องการออกจากโหมดแอดมินใช่หรือไม่?")) {
+        isAdmin = false;
+        sessionStorage.removeItem(ADMIN_SESSION_KEY);
+        updateAdminUI();
+        renderAll();
+        showToast("ออกจากระบบแอดมินเรียบร้อยแล้ว", "info");
+      }
+    }
+
+    function openChangePasswordModal() {
+      document.getElementById("oldAdminPass").value = "";
+      document.getElementById("newAdminPass").value = "";
+      openModal("changePasswordModal");
+    }
+
+    function handleChangePasswordSubmit(e) {
+      e.preventDefault();
+      const oldPass = document.getElementById("oldAdminPass").value.trim();
+      const newPass = document.getElementById("newAdminPass").value.trim();
+      const currentPass = localStorage.getItem(ADMIN_PASS_KEY) || "admin123";
+
+      if (oldPass !== currentPass) {
+        showToast("รหัสผ่านปัจจุบันไม่ถูกต้อง", "error");
+        return;
+      }
+
+      if (newPass.length < 4) {
+        showToast("รหัสผ่านใหม่ต้องมีความยาวอย่างน้อย 4 ตัวอักษร", "error");
+        return;
+      }
+
+      localStorage.setItem(ADMIN_PASS_KEY, newPass);
+      closeModal("changePasswordModal");
+      showToast("เปลี่ยนรหัสผ่านแอดมินสำเร็จเรียบร้อย!", "success");
+    }
+
+    function resetDefaultGames() {
+      if (confirm("คุณต้องการรีเซ็ตข้อมูลเกมส์ทั้งหมดกลับเป็นค่าเริ่มต้นตัวอย่างใช่หรือไม่?")) {
+        games = JSON.parse(JSON.stringify(DEFAULT_GAMES));
+        saveGames();
+        renderAll();
+        showToast("รีเซ็ตคลังเกมส์กลับเป็นค่าเริ่มต้นเรียบร้อยแล้ว", "info");
+      }
+    }
+
+    // Add / Edit Modal handling
+    function openAddGameModal() {
+      document.getElementById("gameFormModalTitle").innerHTML = `
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" color="#00e5ff"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>
+        เพิ่มเกมส์ใหม่
+      `;
+      document.getElementById("formGameId").value = "";
+      document.getElementById("gameTitle").value = "";
+      document.getElementById("gamePlayUrl").value = "";
+      document.getElementById("gameGenre").value = "Action";
+      document.getElementById("gamePlatform").value = "Web / HTML5";
+      document.getElementById("gameIconUrl").value = "";
+      document.getElementById("gameBannerUrl").value = "";
+      document.getElementById("gameDescription").value = "";
+      document.getElementById("gameIsFeatured").checked = false;
+      document.getElementById("saveGameBtn").innerText = "เพิ่มเกมส์เข้าสู่ระบบ";
+
+      updatePreviewIcon("");
+      updatePreviewBanner("");
+      openModal("gameFormModal");
+    }
+
+    function openEditGameModal(id) {
+      const game = games.find(g => g.id === id);
+      if (!game) return;
+
+      document.getElementById("gameFormModalTitle").innerHTML = `
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" color="#00e5ff"><path d="M12 20h9"></path><path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"></path></svg>
+        แก้ไขข้อมูลเกมส์
+      `;
+      document.getElementById("formGameId").value = game.id;
+      document.getElementById("gameTitle").value = game.title || "";
+      document.getElementById("gamePlayUrl").value = game.playUrl || "";
+      document.getElementById("gameGenre").value = game.genre || "Action";
+      document.getElementById("gamePlatform").value = game.platform || "Web / HTML5";
+      document.getElementById("gameIconUrl").value = game.iconUrl || "";
+      document.getElementById("gameBannerUrl").value = game.bannerUrl || "";
+      document.getElementById("gameDescription").value = game.description || "";
+      document.getElementById("gameIsFeatured").checked = !!game.isFeatured;
+      document.getElementById("saveGameBtn").innerText = "บันทึกการแก้ไข";
+
+      updatePreviewIcon(game.iconUrl || "");
+      updatePreviewBanner(game.bannerUrl || "");
+      openModal("gameFormModal");
+    }
+
+    function updatePreviewIcon(url) {
+      const img = document.getElementById("iconPreviewImg");
+      const placeholder = document.getElementById("iconPreviewPlaceholder");
+      if (url && url.trim().length > 5) {
+        img.src = url;
+        img.style.display = "block";
+        placeholder.style.display = "none";
+        img.onerror = () => {
+          img.style.display = "none";
+          placeholder.style.display = "block";
+          placeholder.innerText = "โหลดรูปไม่สำเร็จ";
+        };
+      } else {
+        img.style.display = "none";
+        placeholder.style.display = "block";
+        placeholder.innerText = "ตัวอย่างไอคอน";
+      }
+    }
+
+    function updatePreviewBanner(url) {
+      const img = document.getElementById("bannerPreviewImg");
+      const placeholder = document.getElementById("bannerPreviewPlaceholder");
+      if (url && url.trim().length > 5) {
+        img.src = url;
+        img.style.display = "block";
+        placeholder.style.display = "none";
+        img.onerror = () => {
+          img.style.display = "none";
+          placeholder.style.display = "block";
+          placeholder.innerText = "โหลดรูปไม่สำเร็จ";
+        };
+      } else {
+        img.style.display = "none";
+        placeholder.style.display = "block";
+        placeholder.innerText = "ตัวอย่างภาพแบนเนอร์ปกเกมส์";
+      }
+    }
+
+    function handleSaveGameSubmit(e) {
+      e.preventDefault();
+      const id = document.getElementById("formGameId").value;
+      const title = document.getElementById("gameTitle").value.trim();
+      const playUrl = document.getElementById("gamePlayUrl").value.trim();
+      const genre = document.getElementById("gameGenre").value;
+      const platform = document.getElementById("gamePlatform").value.trim();
+      const iconUrl = document.getElementById("gameIconUrl").value.trim();
+      const bannerUrl = document.getElementById("gameBannerUrl").value.trim();
+      const description = document.getElementById("gameDescription").value.trim();
+      const isFeatured = document.getElementById("gameIsFeatured").checked;
+
+      if (!title || !playUrl) {
+        showToast("กรุณากรอกชื่อเกมและลิงก์เข้าเล่น", "error");
+        return;
+      }
+
+      if (id) {
+        // Edit existing
+        const index = games.findIndex(g => g.id === id);
+        if (index !== -1) {
+          games[index] = {
+            ...games[index],
+            title,
+            playUrl,
+            genre,
+            platform,
+            iconUrl: iconUrl || DEFAULT_ICON,
+            bannerUrl: bannerUrl || DEFAULT_BANNER,
+            description,
+            isFeatured
+          };
+          saveGames();
+          showToast(`อัปเดตเกม "${title}" เรียบร้อยแล้ว`, "success");
+        }
+      } else {
+        // Add new
+        const newGame = {
+          id: "game_" + Date.now(),
+          title,
+          playUrl,
+          genre,
+          platform,
+          iconUrl: iconUrl || DEFAULT_ICON,
+          bannerUrl: bannerUrl || DEFAULT_BANNER,
+          description,
+          isFeatured,
+          createdAt: Date.now()
+        };
+        games.unshift(newGame);
+        saveGames();
+        showToast(`เพิ่มเกม "${title}" เข้าสู่ระบบเรียบร้อยแล้ว!`, "success");
+      }
+
+      closeModal("gameFormModal");
+      renderAll();
+    }
+
+    function deleteGame(id) {
+      const game = games.find(g => g.id === id);
+      if (!game) return;
+
+      if (confirm(`คุณแน่ใจหรือไม่ว่าต้องการลบเกม "${game.title}" ออกจากระบบ?`)) {
+        games = games.filter(g => g.id !== id);
+        saveGames();
+        renderAll();
+        showToast(`ลบเกม "${game.title}" เรียบร้อยแล้ว`, "info");
+      }
+    }
+
+    /* ==========================================================
+       DATA BACKUP & RESTORE (JSON EXPORT / IMPORT)
+       ========================================================== */
+    function exportGameData() {
+      const dataStr = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(games, null, 2));
+      const downloadAnchor = document.createElement('a');
+      downloadAnchor.setAttribute("href", dataStr);
+      downloadAnchor.setAttribute("download", `games_vault_backup_${new Date().toISOString().slice(0, 10)}.json`);
+      document.body.appendChild(downloadAnchor);
+      downloadAnchor.click();
+      downloadAnchor.remove();
+      showToast("ส่งออกไฟล์สำรองข้อมูล JSON เรียบร้อยแล้ว", "success");
+    }
+
+    function triggerImportJSON() {
+      document.getElementById("importFileInput").click();
+    }
+
+    function handleImportJSON(event) {
+      const file = event.target.files[0];
+      if (!file) return;
+
+      const reader = new FileReader();
+      reader.onload = function(e) {
+        try {
+          const imported = JSON.parse(e.target.result);
+          if (Array.isArray(imported)) {
+            if (confirm(`พบข้อมูลเกมทั้งหมด ${imported.length} เกม ต้องการนำเข้าและแทนที่ข้อมูลปัจจุบันใช่หรือไม่?`)) {
+              games = imported;
+              saveGames();
+              renderAll();
+              showToast(`นำเข้าเกมสำเร็จทั้งหมด ${imported.length} เกม!`, "success");
+            }
+          } else {
+            showToast("รูปแบบไฟล์ JSON ไม่ถูกต้อง (ต้องเป็น Array ของเกม)", "error");
+          }
+        } catch (err) {
+          showToast("ไม่สามารถอ่านไฟล์ JSON ได้ กรุณาตรวจสอบความถูกต้อง", "error");
+        }
+      };
+      reader.readAsText(file);
+      event.target.value = "";
+    }
+
+    /* ==========================================================
+       MODAL UTILS & TOAST NOTIFICATION
+       ========================================================== */
+    function openModal(id) {
+      const modal = document.getElementById(id);
+      if (modal) modal.classList.add("open");
+    }
+
+    function closeModal(id) {
+      const modal = document.getElementById(id);
+      if (modal) modal.classList.remove("open");
+    }
+
+    // Close on backdrop click
+    document.querySelectorAll(".modal-backdrop").forEach(backdrop => {
+      backdrop.addEventListener("click", function(e) {
+        if (e.target === this) {
+          if (this.id === "gamePlayerModal") {
+            closePlayerModal();
+          } else {
+            this.classList.remove("open");
+          }
+        }
+      });
+    });
+
+    // Close on Escape key
+    window.addEventListener("keydown", function(e) {
+      if (e.key === "Escape") {
+        document.querySelectorAll(".modal-backdrop.open").forEach(m => {
+          if (m.id === "gamePlayerModal") closePlayerModal();
+          else m.classList.remove("open");
+        });
+      }
+    });
+
+    function showToast(message, type = "info") {
+      const container = document.getElementById("toastContainer");
+      const toast = document.createElement("div");
+      toast.className = `toast ${type}`;
+
+      let iconSvg = `<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="16" x2="12" y2="12"></line><line x1="12" y1="8" x2="12.01" y2="8"></line></svg>`;
+      if (type === "success") {
+        iconSvg = `<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" color="#10b981"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path><polyline points="22 4 12 14.01 9 11.01"></polyline></svg>`;
+      } else if (type === "error") {
+        iconSvg = `<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" color="#ef4444"><circle cx="12" cy="12" r="10"></circle><line x1="15" y1="9" x2="9" y2="15"></line><line x1="9" y1="9" x2="15" y2="15"></line></svg>`;
+      }
+
+      toast.innerHTML = `
+        ${iconSvg}
+        <div style="flex: 1;">${escapeHtml(message)}</div>
+      `;
+      container.appendChild(toast);
+
+      setTimeout(() => {
+        toast.style.opacity = "0";
+        toast.style.transform = "translateY(10px)";
+        toast.style.transition = "all 0.3s ease";
+        setTimeout(() => toast.remove(), 300);
+      }, 3500);
+    }
+
+    function escapeHtml(str) {
+      if (!str) return '';
+      return String(str)
+        .replace(/&/g, '&amp;')
+        .replace(/</g, '&lt;')
+        .replace(/>/g, '&gt;')
+        .replace(/"/g, '&quot;')
+        .replace(/'/g, '&#39;');
+    }
+
+    // Start app
+    window.addEventListener("DOMContentLoaded", init);
+  </script>
+</body>
+</html>
