@@ -1575,11 +1575,28 @@
         ],
         isFeatured: true,
         createdAt: 1730459000000
+      },
+      {
+        id: "gmon_battle",
+        title: "GMON: ศึกประลองโปเกมอนออนไลน์",
+        playUrl: "https://genuine-panda-4bc6aa.netlify.app/",
+        iconUrl: "assets/gmon_icon.png",
+        bannerUrl: "assets/gmon_banner.jpg",
+        genre: "Action",
+        platform: "Web / PC & Mobile (Real-Time 3v3 Arena)",
+        description: "GMON เกมประลองโปเกมอนออนไลน์สไตล์ 3v3 Real-Time Arena Battle! จัดทีมโปเกมอนคู่ใจ 3 ตัวจาก Gen I ถึง Gen IX (เช่น Greninja ซิงโครสายสัมพันธ์, Talonflame, Floette, Infernape) ค้นหาคู่ต่อสู้ออนไลน์แบบเรียลไทม์ ปล่อยท่าไม้ตายตามธาตุ (Water Shuriken, Dark Pulse, Blizzard) สลับตัว วางแท็กติก แก้ทางธาตุ และไต่แรงค์ Rank Match พร้อมระบบรีเพลย์และบันทึกการแข่ง",
+        screenshots: [
+          "assets/gmon_lobby.png",
+          "assets/gmon_battle.png",
+          "assets/gmon_rank.png"
+        ],
+        isFeatured: true,
+        createdAt: 1730458000000
       }
     ];
 
     // LocalStorage Keys
-    const STORAGE_KEY = "my_game_vault_games_v8";
+    const STORAGE_KEY = "my_game_vault_games_v9";
     const ADMIN_PASS_KEY = "my_game_vault_admin_pass";
     const ADMIN_SESSION_KEY = "my_game_vault_admin_session";
 
@@ -1620,7 +1637,7 @@
         saveGames();
       }
 
-      // Sync and maintain official ordering for all 8 games
+      // Sync and maintain official ordering for all 9 games
       const orderIds = [
         "ghost_clan",
         "vanguard_online",
@@ -1629,7 +1646,8 @@
         "ilion_boardgame",
         "farm_sukjai",
         "aomao_aohak",
-        "siam_guardian"
+        "siam_guardian",
+        "gmon_battle"
       ];
 
       orderIds.forEach(id => {
