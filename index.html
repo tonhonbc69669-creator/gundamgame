@@ -1539,11 +1539,28 @@
         ],
         isFeatured: true,
         createdAt: 1730460000000
+      },
+      {
+        id: "siam_guardian",
+        title: "เที่ยวไทย กาชา ชากา: ผู้พิทักษ์สยาม",
+        playUrl: "https://zesty-narwhal-94c049.netlify.app/",
+        iconUrl: "assets/siam_icon.png",
+        bannerUrl: "assets/siam_banner.jpg",
+        genre: "RPG",
+        platform: "Web / Mobile & PC (HTML5 RPG)",
+        description: "ออกเดินทางสู่ตำนานบทใหม่ ท่องเที่ยว 77 จังหวัดทั่วไทย ผจญภัยฝ่า 770 ด่าน! เกมกาชา RPG วางแผนจัดทีมคณะผู้พิทักษ์สยาม (ขุนศึก, นางมณี, ธนากร, พิมพ์ลดา, คำแก้ว) สัมผัสเสน่ห์ศิลปวัฒนธรรมไทย ปะทะเหล่ายักษ์และอสูรโบราณริมฝั่งแม่น้ำเจ้าพระยา",
+        screenshots: [
+          "assets/siam_lobby.jpg",
+          "assets/siam_team.png",
+          "assets/siam_battle.jpg"
+        ],
+        isFeatured: true,
+        createdAt: 1730459000000
       }
     ];
 
     // LocalStorage Keys
-    const STORAGE_KEY = "my_game_vault_games_v7";
+    const STORAGE_KEY = "my_game_vault_games_v8";
     const ADMIN_PASS_KEY = "my_game_vault_admin_pass";
     const ADMIN_SESSION_KEY = "my_game_vault_admin_session";
 
@@ -1584,7 +1601,7 @@
         saveGames();
       }
 
-      // Sync and maintain official ordering for all 7 games
+      // Sync and maintain official ordering for all 8 games
       const orderIds = [
         "ghost_clan",
         "vanguard_online",
@@ -1592,7 +1609,8 @@
         "keyboard_warrior",
         "ilion_boardgame",
         "farm_sukjai",
-        "aomao_aohak"
+        "aomao_aohak",
+        "siam_guardian"
       ];
 
       orderIds.forEach(id => {
