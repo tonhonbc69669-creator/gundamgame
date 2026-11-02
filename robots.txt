@@ -1,0 +1,67 @@
+# Robots.txt for GUNDAMGAME Portal
+# Protection of game assets and original works from unauthorized AI scraping
+
+# OpenAI Bots
+User-agent: GPTBot
+Disallow: /
+
+User-agent: ChatGPT-User
+Disallow: /
+
+# Anthropic (Claude) Bots
+User-agent: ClaudeBot
+Disallow: /
+
+User-agent: Claude-Web
+Disallow: /
+
+User-agent: anthropic-ai
+Disallow: /
+
+# Common Crawl (Used by massive LLM datasets)
+User-agent: CCBot
+Disallow: /
+
+# Perplexity AI
+User-agent: PerplexityBot
+Disallow: /
+
+# ByteDance / TikTok AI
+User-agent: Bytespider
+Disallow: /
+
+# Google Gemini Training Crawler
+User-agent: Google-Extended
+Disallow: /
+
+# Apple AI
+User-agent: Applebot-Extended
+Disallow: /
+
+# Meta AI
+User-agent: Meta-ExternalAgent
+Disallow: /
+
+User-agent: FacebookBot
+Disallow: /
+
+# Cohere AI
+User-agent: Cohere-ai
+Disallow: /
+
+# Diffbot & Automated Scrapers
+User-agent: Diffbot
+Disallow: /
+
+User-agent: ImagesiftBot
+Disallow: /
+
+User-agent: Scrapy
+Disallow: /
+
+# General bots - protect direct asset extraction
+User-agent: *
+Allow: /
+Disallow: /assets/*.png$
+Disallow: /assets/*.jpg$
+Disallow: /assets/*.jpeg$

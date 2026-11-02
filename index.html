@@ -4,6 +4,14 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>GUNDAMGAME - คลังเกมส์ออนไลน์สไตล์ GOG</title>
+
+  <!-- Anti-AI Scraping & Content Protection -->
+  <meta name="robots" content="index, follow, noai, noimageai">
+  <meta name="googlebot" content="index, follow, noai, noimageai">
+  <meta name="description" content="GUNDAMGAME - คลังเกมส์ออนไลน์สไตล์ GOG รวมผลงานเกมเบราว์เซอร์เล่นฟรีทันที">
+  <meta name="author" content="GUNDAMGAME">
+  <meta name="copyright" content="GUNDAMGAME. All Rights Reserved.">
+
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Prompt:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&family=Rajdhani:wght@600;700&display=swap" rel="stylesheet">
@@ -53,6 +61,17 @@
       background-image: 
         radial-gradient(circle at 15% 15%, rgba(0, 102, 255, 0.08) 0%, transparent 40%),
         radial-gradient(circle at 85% 65%, rgba(0, 229, 255, 0.05) 0%, transparent 40%);
+    }
+
+    /* Anti-Theft / Image & Media Drag Protection */
+    img, .game-card-banner, .hero-slide-bg {
+      -webkit-user-drag: none;
+      -khtml-user-drag: none;
+      -moz-user-drag: none;
+      -o-user-drag: none;
+      user-drag: none;
+      user-select: none;
+      -webkit-user-select: none;
     }
 
     /* Scrollbar */
@@ -2366,6 +2385,65 @@
         .replace(/"/g, '&quot;')
         .replace(/'/g, '&#39;');
     }
+
+    /* ==========================================================
+       SECURITY & ANTI-SCRAPING MODULE
+       ========================================================== */
+    (function initSecurity() {
+      // 1. Console Warning (Anti-DevTools & Attribution)
+      try {
+        console.log("%c🔒 GUNDAMGAME PORTAL SECURITY ACTIVE", "color: #00e5ff; font-size: 16px; font-weight: bold; background: #070a12; padding: 6px 12px; border-radius: 4px; border-left: 4px solid #0066ff;");
+        console.log("%cระบบคุ้มครองลิขสิทธิ์และทรัพย์สินทางปัญญาผลงานเกมส์กำลังทำงาน ห้ามทำการดัดแปลง คัดลอก หรือดึงข้อมูลโดยไม่ได้รับอนุญาต", "color: #94a3b8; font-size: 12px;");
+      } catch (e) {}
+
+      // 2. Disable Right-Click (Context Menu) - Allow inside inputs/textarea for user convenience
+      document.addEventListener("contextmenu", function(e) {
+        const tag = e.target.tagName.toLowerCase();
+        if (tag === "input" || tag === "textarea") return;
+        e.preventDefault();
+        showToast("🔒 เว็บไซต์นี้เปิดระบบคุ้มครองลิขสิทธิ์ภาพและผลงานเกมส์", "warning");
+      });
+
+      // 3. Disable DevTools and Source-Viewing Keyboard Shortcuts
+      window.addEventListener("keydown", function(e) {
+        // F12
+        if (e.key === "F12" || e.keyCode === 123) {
+          e.preventDefault();
+          showToast("⚠️ ไม่อนุญาตให้เปิดโหมดตรวจสอบโค้ด (DevTools)", "error");
+          return false;
+        }
+
+        const isCtrl = e.ctrlKey || e.metaKey;
+
+        // Ctrl+Shift+I / J / C (Inspect / Console)
+        if (isCtrl && e.shiftKey && (e.key === "I" || e.key === "i" || e.key === "J" || e.key === "j" || e.key === "C" || e.key === "c")) {
+          e.preventDefault();
+          showToast("⚠️ ระบบความปลอดภัยป้องกันการเปิด DevTools", "error");
+          return false;
+        }
+
+        // Ctrl+U (View Source)
+        if (isCtrl && (e.key === "U" || e.key === "u")) {
+          e.preventDefault();
+          showToast("⚠️ ป้องกันการดูดซอร์สโค้ดหน้าเว็บ", "error");
+          return false;
+        }
+
+        // Ctrl+S (Save Page)
+        if (isCtrl && (e.key === "S" || e.key === "s")) {
+          e.preventDefault();
+          showToast("🔒 ไม่อนุญาตให้บันทึกหน้าเว็บออฟไลน์", "warning");
+          return false;
+        }
+      });
+
+      // 4. Disable drag start on media
+      document.addEventListener("dragstart", function(e) {
+        if (e.target.nodeName === "IMG" || (e.target.classList && e.target.classList.contains("game-card-banner"))) {
+          e.preventDefault();
+        }
+      });
+    })();
 
     // Start app
     window.addEventListener("DOMContentLoaded", init);
