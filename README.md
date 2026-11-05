@@ -48,7 +48,7 @@
 
 9. **GMON: ศึกประลองโปเกมอนออนไลน์ (Pokémon Fan Battle Arena)**  
    - **แนวเกม:** `Action` (ประลองต่อสู้แบบเรียลไทม์ 3v3 Arena)  
-   - **ลิงก์เข้าเล่น:** [https://chimerical-gingersnap-254f2f.netlify.app/](https://chimerical-gingersnap-254f2f.netlify.app/)  
+   - **ลิงก์เข้าเล่น:** [https://cosmic-gumption-d7c038.netlify.app/](https://cosmic-gumption-d7c038.netlify.app/)  
    - **คำอธิบาย:** GMON เกมประลองโปเกมอนออนไลน์สไตล์ 3v3 Real-Time Arena Battle จัดทีมโปเกมอนคู่ใจ 3 ตัวจาก Gen I ถึง Gen IX (เช่น Greninja ซิงโครสายสัมพันธ์, Talonflame, Floette, Infernape) ค้นหาคู่ต่อสู้ออนไลน์แบบเรียลไทม์ ปล่อยท่าไม้ตายตามธาตุ สลับตัวแก้ทาง และไต่แรงค์ Rank Match พร้อมระบบรีเพลย์
 
 ---
